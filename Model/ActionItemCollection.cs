@@ -9,7 +9,7 @@ using TodoItem = ToDoLib.Task;
 
 namespace sbs20.Actiontext.Model
 {
-    public class ActionItemCollection : SortedObservableCollection<TodoItem>
+    public class ActionItemCollection : SortedObservableCollection<ActionItem>
     {
         // Singleton
         private static ActionItemCollection instance;
@@ -22,15 +22,8 @@ namespace sbs20.Actiontext.Model
             this.ViewSource = new ObservableCollection<TodoGroupItem>();
             this.SortKey = i =>
             {
-                try
-                {
-                    string s = !i.Completed ? i.CreationDate : i.CompletedDate;
-                    DateTime creationDate = DateTime.Parse(s);
-                    TimeSpan span = DateTime.MaxValue - creationDate;
-                    return (i.Completed ? "1" : "0") + i.Priority + ":" + span.Ticks + ":" + i.Body;
-                }
-                catch { }
-                return "";
+                TimeSpan span = DateTime.MaxValue - i.DisplayDate;
+                return (i.IsComplete ? "1" : "0") + ":" + i.Priority + ":" + span.Ticks + ":" + i.Body;
             };
 
             this.CollectionChanged += TaskCollection_CollectionChanged;
@@ -41,7 +34,7 @@ namespace sbs20.Actiontext.Model
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (TodoItem todo in e.NewItems)
+                    foreach (ActionItem todo in e.NewItems)
                     {
                         var item = this.ViewSource.Where(i => i.Key == todo.Priority).FirstOrDefault();
                         if (item == null)
@@ -52,7 +45,6 @@ namespace sbs20.Actiontext.Model
                         }
 
                         item.Add(todo);
-                        
                     }
 
                     break;

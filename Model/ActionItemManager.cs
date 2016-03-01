@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
-using TodoTask = ToDoLib.Task;
 
 namespace sbs20.Actiontext.Model
 {
     public class ActionItemManager
     {
-        public ActionItemCollection Items
+        public ActionItemCollection Actions
         {
             get; private set;
         }
 
         public ActionItemManager()
         {
-            this.Items = ActionItemCollection.Instance;
+            this.Actions = ActionItemCollection.Instance;
         }
 
         public async void Load()
@@ -27,13 +22,13 @@ namespace sbs20.Actiontext.Model
             var lines = await FileIO.ReadLinesAsync(file);
             foreach (string line in lines)
             {
-                this.Items.Add(new TodoTask(line));
+                this.Actions.Add(ActionItem.Parse(line));
             }
         }
 
-        private void Merge(ToDoLib.TaskList tasklist, IEnumerable<TodoTask> tasks)
-        {
+        //private void Merge(ToDoLib.TaskList tasklist, IEnumerable<TodoTask> tasks)
+        //{
 
-        }
+        //}
     }
 }

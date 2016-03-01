@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace sbs20.Actiontext.Model
 {
-    public class TodoGroupItem : GroupedObservableCollection<ToDoLib.Task>
+    public class TodoGroupItem : GroupedObservableCollection<ActionItem>
     {
     }
 }

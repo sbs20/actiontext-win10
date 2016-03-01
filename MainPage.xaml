@@ -5,7 +5,6 @@
     xmlns:local="using:Tasktxt"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:ToDoLib"
     xmlns:model="using:sbs20.Actiontext.Model"
     mc:Ignorable="d">
 
@@ -15,7 +14,7 @@
         
         <DataTemplate
             x:Name="dataTemplate"
-            x:DataType="data:Task">
+            x:DataType="model:ActionItem">
 
             <Grid>
 
@@ -44,7 +43,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    Text="{x:Bind CreationDate}" />
+                    Text="{x:Bind DisplayDateString}" />
 
             </Grid>
 
