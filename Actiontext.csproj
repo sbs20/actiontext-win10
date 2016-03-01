@@ -107,8 +107,8 @@
     <Compile Include="Model\TodoGroupItem.cs" />
     <Compile Include="Model\StorageProvider.cs" />
     <Compile Include="Model\Settings.cs" />
-    <Compile Include="Model\TaskCollection.cs" />
-    <Compile Include="Model\TaskItemManager.cs" />
+    <Compile Include="Model\ActionItemCollection.cs" />
+    <Compile Include="Model\ActionItemManager.cs" />
     <Compile Include="ToDoLib\Log.cs" />
     <Compile Include="ToDoLib\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

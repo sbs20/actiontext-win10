@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace sbs20.Tasktxt.Model
+namespace sbs20.Actiontext.Model
 {
     public class SortedObservableCollection<T> : ObservableCollection<T>
     {

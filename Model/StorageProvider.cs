@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace sbs20.Tasktxt.Model
+namespace sbs20.Actiontext.Model
 {
     public class StorageProvider
     {

@@ -1,4 +1,4 @@
-﻿using sbs20.Tasktxt.Model;
+﻿using sbs20.Actiontext.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,11 +28,11 @@ namespace Tasktxt
         {
             this.InitializeComponent();
 
-            TaskItemManager m = new TaskItemManager();
+            ActionItemManager m = new ActionItemManager();
             m.Load();
 
             //this.data.Source = TaskCollection.Instance.ViewSource;
-            this.TaskItems.ItemsSource = TaskCollection.Instance;
+            this.TaskItems.ItemsSource = ActionItemCollection.Instance;
         }
     }
 }

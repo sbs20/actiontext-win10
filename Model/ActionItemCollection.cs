@@ -7,17 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using TodoItem = ToDoLib.Task;
 
-namespace sbs20.Tasktxt.Model
+namespace sbs20.Actiontext.Model
 {
-    public class TaskCollection : SortedObservableCollection<TodoItem>
+    public class ActionItemCollection : SortedObservableCollection<TodoItem>
     {
         // Singleton
-        private static TaskCollection instance;
+        private static ActionItemCollection instance;
 
         // Members
         public ObservableCollection<TodoGroupItem> ViewSource { get; private set; }
 
-        private TaskCollection()
+        private ActionItemCollection()
         {
             this.ViewSource = new ObservableCollection<TodoGroupItem>();
             this.SortKey = i =>
@@ -62,7 +62,6 @@ namespace sbs20.Tasktxt.Model
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
-                    int bbb = 0;
                     break;
             }
 
@@ -78,13 +77,13 @@ namespace sbs20.Tasktxt.Model
 
         }
 
-        public static TaskCollection Instance
+        public static ActionItemCollection Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new TaskCollection();
+                    instance = new ActionItemCollection();
                 }
 
                 return instance;
