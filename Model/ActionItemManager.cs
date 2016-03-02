@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Windows.Storage;
 
-namespace sbs20.Actiontext.Model
+namespace Sbs20.Actiontext.Model
 {
     public class ActionItemManager
     {

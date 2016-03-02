@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TodoItem = ToDoLib.Task;
 
-namespace sbs20.Actiontext.Model
+namespace Sbs20.Actiontext.Model
 {
     public class ActionItemCollection : SortedObservableCollection<ActionItem>
     {

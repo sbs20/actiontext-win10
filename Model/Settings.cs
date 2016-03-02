@@ -5,7 +5,7 @@ using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 
-namespace sbs20.Actiontext.Model
+namespace Sbs20.Actiontext.Model
 {
     class Settings
     {

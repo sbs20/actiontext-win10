@@ -7,7 +7,7 @@
     <ProjectGuid>{CE49AFBB-D9BC-49FF-B4D1-55244C545CC8}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sbs20.Actiontext</RootNamespace>
+    <RootNamespace>Sbs20.Actiontext</RootNamespace>
     <AssemblyName>Actiontext</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
@@ -98,6 +98,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\XamlDependencyObjectExtension.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
