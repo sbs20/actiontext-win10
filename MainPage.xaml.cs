@@ -35,5 +35,10 @@ namespace Sbs20.Actiontext
             this.ActionItems.ItemsSource = ActionItemCollection.Instance;
             
         }
+
+        private void ActionItems_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }
