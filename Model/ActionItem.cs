@@ -99,5 +99,34 @@ namespace sbs20.Actiontext.Model
         {
             get { return ToString(this.DisplayDate); }
         }
+
+        public string PriorityColour
+        {
+            get
+            {
+                switch (this.Priority.ToLower())
+                {
+                    case "(a)":
+                        return "Red";
+
+                    case "(b)":
+                        return "Orange";
+
+                    case "(c)":
+                        return "Green";
+
+                    case "(d)":
+                        return "SkyBlue";
+
+                    default:
+                        return "#808080";
+                }
+            }
+        }
+
+        public string StrikethroughLineVisibility
+        {
+            get { return this.IsComplete ? "Visible" : "Collapsed"; }
+        }
     }
 }

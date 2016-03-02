@@ -32,7 +32,8 @@ namespace Tasktxt
             m.Load();
 
             //this.data.Source = TaskCollection.Instance.ViewSource;
-            this.TaskItems.ItemsSource = ActionItemCollection.Instance;
+            this.ActionItems.ItemsSource = ActionItemCollection.Instance;
+            
         }
     }
 }

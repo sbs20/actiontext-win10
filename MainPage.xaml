@@ -16,7 +16,8 @@
             x:Name="dataTemplate"
             x:DataType="model:ActionItem">
 
-            <Grid>
+            <Grid
+                Margin="5,5,5,5">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -24,25 +25,42 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25" />
-                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="35" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
                     Name="Priority"
                     Grid.Row="0"
                     Grid.Column="0"
+                    Foreground="{x:Bind PriorityColour}"
+                    FontWeight="Bold"
+                    FontSize="20"
                     Text="{x:Bind Priority}"/>
                 
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
+                    TextWrapping="Wrap"
+                    FontSize="20"
                     Text="{x:Bind Body}"/>
-                
+
+                <Line
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Stretch="Fill" 
+                    Stroke="Gray" 
+                    StrokeThickness="2" 
+                    X1="1"
+                    Visibility="{x:Bind StrikethroughLineVisibility}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" />
+
                 <TextBlock 
                     Grid.Row="1"
-                    Grid.Column="0"
+                    Grid.Column="1"
                     Grid.ColumnSpan="2"
+                    FontSize="12"
                     Text="{x:Bind DisplayDateString}" />
 
             </Grid>
@@ -52,10 +70,14 @@
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <ListView 
+            Name="ActionItems"
+            ItemTemplate="{StaticResource dataTemplate}" />
+
         <GridView
             Name="TaskItems"
+            Visibility="Collapsed"
             ItemTemplate="{StaticResource dataTemplate}">
-
         </GridView>
 
         <GridView
