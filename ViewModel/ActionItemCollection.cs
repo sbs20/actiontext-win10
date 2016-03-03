@@ -11,11 +11,11 @@ namespace Sbs20.Actiontext.ViewModel
         private static ActionItemCollection instance;
 
         // Members
-        public ObservableCollection<TodoGroupItem> ViewSource { get; private set; }
+        public ObservableCollection<GroupedActionItemCollection> ViewSource { get; private set; }
 
         private ActionItemCollection()
         {
-            this.ViewSource = new ObservableCollection<TodoGroupItem>();
+            this.ViewSource = new ObservableCollection<GroupedActionItemCollection>();
             this.SortKey = i =>
             {
                 TimeSpan span = DateTime.MaxValue - i.DisplayDate;
@@ -35,7 +35,7 @@ namespace Sbs20.Actiontext.ViewModel
                         var item = this.ViewSource.Where(i => i.Key == todo.Priority).FirstOrDefault();
                         if (item == null)
                         {
-                            item = new TodoGroupItem();
+                            item = new GroupedActionItemCollection();
                             item.Key = todo.Priority;
                             this.ViewSource.Add(item);
                         }

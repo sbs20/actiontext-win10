@@ -116,7 +116,7 @@
     <Compile Include="ViewModel\ActionItem.cs" />
     <Compile Include="ViewModel\GroupedObservableCollection.cs" />
     <Compile Include="ViewModel\SortedObservableCollection.cs" />
-    <Compile Include="ViewModel\TodoGroupItem.cs" />
+    <Compile Include="ViewModel\GroupedActionItemCollection.cs" />
     <Compile Include="Model\FileStorageProvider.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="ViewModel\ActionItemCollection.cs" />

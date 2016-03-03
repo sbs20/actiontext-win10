@@ -172,7 +172,7 @@
             <GridView.GroupStyle>
                 <GroupStyle >
                     <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="viewmodel:TodoGroupItem">
+                        <DataTemplate x:DataType="viewmodel:GroupedActionItemCollection">
                             <TextBlock Text="{x:Bind Key}" 
                                        Style="{ThemeResource TitleTextBlockStyle}"/>
                         </DataTemplate>
