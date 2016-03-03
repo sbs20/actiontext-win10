@@ -161,6 +161,7 @@
             Name="TaskItems"
             Visibility="Collapsed"
             ItemTemplate="{StaticResource dataTemplate}">
+            
         </GridView>
 
         <GridView
