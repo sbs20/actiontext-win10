@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 
-namespace Sbs20.Actiontext.ViewModels
+namespace Sbs20.Actiontext.ViewModel
 {
     public class NavigationMenuItem
     {

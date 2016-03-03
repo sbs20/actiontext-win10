@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Sbs20.Actiontext.Controls;
-using Sbs20.Actiontext.ViewModels;
+using Sbs20.Actiontext.ViewModel;
 using Sbs20.Actiontext.Views;
 using Windows.UI.ViewManagement;
 

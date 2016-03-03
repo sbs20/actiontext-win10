@@ -4,7 +4,7 @@ using Windows.Storage;
 
 namespace Sbs20.Actiontext.Model
 {
-    public class StorageProvider
+    public class FileStorageProvider
     {
         public static async Task<StorageFile> LoadFileAsync()
         {

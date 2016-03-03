@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using TodoTask = ToDoLib.Task;
 
-namespace Sbs20.Actiontext.Model
+namespace Sbs20.Actiontext.ViewModel
 {
     public class ActionItem : INotifyPropertyChanged
     {

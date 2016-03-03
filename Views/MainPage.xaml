@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Sbs20.Actiontext.Controls"
-    xmlns:model="using:Sbs20.Actiontext.Model"
+    xmlns:viewmodel="using:Sbs20.Actiontext.ViewModel"
     mc:Ignorable="d">
 
     <Page.BottomAppBar>
@@ -29,7 +29,7 @@
         
         <DataTemplate
             x:Name="dataTemplate"
-            x:DataType="model:ActionItem">
+            x:DataType="viewmodel:ActionItem">
 
             <Grid
                 Margin="5,5,5,5">
@@ -172,7 +172,7 @@
             <GridView.GroupStyle>
                 <GroupStyle >
                     <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="model:TodoGroupItem">
+                        <DataTemplate x:DataType="viewmodel:TodoGroupItem">
                             <TextBlock Text="{x:Bind Key}" 
                                        Style="{ThemeResource TitleTextBlockStyle}"/>
                         </DataTemplate>

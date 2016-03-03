@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Windows.Storage;
+using Sbs20.Actiontext.Model;
 
-namespace Sbs20.Actiontext.Model
+namespace Sbs20.Actiontext.ViewModel
 {
     public class ActionItemManager
     {
@@ -18,7 +18,7 @@ namespace Sbs20.Actiontext.Model
 
         public async void Load()
         {
-            var file = await StorageProvider.LoadFileAsync();
+            var file = await FileStorageProvider.LoadFileAsync();
             var lines = await FileIO.ReadLinesAsync(file);
             foreach (string line in lines)
             {

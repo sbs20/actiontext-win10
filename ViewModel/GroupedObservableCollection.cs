@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
-namespace Sbs20.Actiontext.Model
+namespace Sbs20.Actiontext.ViewModel
 {
     public class GroupedObservableCollection<T> : ObservableCollection<T>
     {

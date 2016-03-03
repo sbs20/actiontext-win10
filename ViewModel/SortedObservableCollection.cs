@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Sbs20.Actiontext.Model
+namespace Sbs20.Actiontext.ViewModel
 {
     public class SortedObservableCollection<T> : ObservableCollection<T>
     {
