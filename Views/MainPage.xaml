@@ -9,6 +9,20 @@
     xmlns:model="using:Sbs20.Actiontext.Model"
     mc:Ignorable="d">
 
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Name="Multiselect" Label="Select Items" Click="Multiselect_Click">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe762;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="Add" Label="Add" Icon="Add" Click="Add_Click" />
+            <AppBarButton x:Name="Refresh" Label="Refresh" Icon="Refresh" Click="Refresh_Click" />
+            <AppBarButton x:Name="Delete" Label="Delete" Icon="Delete" Click="Delete_Click" />
+            <AppBarButton x:Name="CancelMultiselect" Label="Cancel" Icon="Cancel" Click="CancelMultiselect_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
     <Page.Resources>
 
         <CollectionViewSource x:Name="data" IsSourceGrouped="True" />
@@ -75,9 +89,49 @@
             </Grid>
 
         </DataTemplate>
+        
     </Page.Resources>
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStates_CurrentStateChanged">
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="520" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup x:Name="MasterDetailsStatesGroup">
+                <VisualState x:Name="StandardState">
+                    <VisualState.Setters>
+                        <Setter Target="ActionItems.SelectionMode" Value="Single" />
+                        <Setter Target="ActionItems.IsItemClickEnabled" Value="True" />
+                        <!--#region App Bar Commands-->
+                        <Setter Target="Multiselect.Visibility" Value="Visible" />
+                        <Setter Target="Add.Visibility" Value="Visible" />
+                        <Setter Target="Refresh.Visibility" Value="Visible" />
+                        <Setter Target="Delete.Visibility" Value="Collapsed" />
+                        <Setter Target="CancelMultiselect.Visibility" Value="Collapsed" />
+                        <!--#endregion-->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="MultipleSelectionState">
+                    <VisualState.Setters>
+                        <Setter Target="ActionItems.SelectionMode" Value="Multiple" />
+                        <Setter Target="ActionItems.IsItemClickEnabled" Value="False" />
+                        <!--#region App Bar Commands-->
+                        <Setter Target="Multiselect.Visibility" Value="Collapsed" />
+                        <Setter Target="Add.Visibility" Value="Collapsed" />
+                        <Setter Target="Refresh.Visibility" Value="Collapsed" />
+                        <Setter Target="Delete.Visibility" Value="Visible" />
+                        <Setter Target="CancelMultiselect.Visibility" Value="Visible" />
+                        <!--#endregion-->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -86,7 +140,7 @@
 
         <controls:PageHeader Grid.Row="0">
             <controls:PageHeader.HeaderContent>
-                <TextBlock Text="Notes" Style="{ThemeResource PageTitleTextBlockStyle}"/>
+                <TextBlock Text="Actions" Style="{ThemeResource PageTitleTextBlockStyle}"/>
             </controls:PageHeader.HeaderContent>
         </controls:PageHeader>
 

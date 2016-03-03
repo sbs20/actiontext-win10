@@ -17,7 +17,7 @@
 
         <c:PageHeader x:Name="pageHeader">
             <c:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" Style="{ThemeResource PageTitleTextBlockStyle}" Text="About Actiontexxt"/>
+                <TextBlock x:Name="title" Style="{ThemeResource PageTitleTextBlockStyle}" Text="About Actiontext"/>
             </c:PageHeader.HeaderContent>
         </c:PageHeader>
 
