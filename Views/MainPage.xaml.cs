@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Sbs20.Actiontext.ViewModel;
+using System.Collections.Generic;
 
 namespace Sbs20.Actiontext.Views
 {
@@ -18,12 +19,32 @@ namespace Sbs20.Actiontext.Views
             this.ActionItems.ItemsSource = ActionItemCollection.Instance;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            this.manager.Reload();
-
+            await this.manager.Reload();
+            this.SelectMostAppropriateActionItem();
             VisualStateManager.GoToState(this, this.StandardState.Name, true);
+        }
+
+        private void SelectMostAppropriateActionItem()
+        {
+            if (this.manager.Actions.Count > 0)
+            {
+                if (this.manager.Selected != null && !this.ActionItems.Items.Contains(this.manager.Selected))
+                {
+                    // If we're navigating back to this page then we reload all the notes from disk in which
+                    // case we will have new references.
+                    this.manager.Selected = this.manager.Actions.FindByValue(this.manager.Selected);
+                }
+
+                if (this.manager.Selected == null)
+                {
+                    this.manager.Selected = this.manager.Actions[0];
+                }
+
+                this.ActionItems.SelectedItem = this.manager.Selected;
+            }
         }
 
         private void AdaptiveStates_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
@@ -32,7 +53,6 @@ namespace Sbs20.Actiontext.Views
 
         private void ActionItems_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
 
         private async void Add_Click(object sender, RoutedEventArgs e)
@@ -44,19 +64,19 @@ namespace Sbs20.Actiontext.Views
 
         private async void Delete_Click(object sender, RoutedEventArgs e)
         {
-            //IList<Note> toBeDeleted = new List<Note>();
+            IList<ActionItem> toBeDeleted = new List<ActionItem>();
 
-            //// We have to make a temporary list of things to delete as doing so in the loop
-            //// will invalidate the IEnumerable
-            //foreach (Note note in this.MasterListView.SelectedItems)
-            //{
-            //    toBeDeleted.Add(note);
-            //}
+            // We have to make a temporary list of things to delete as doing so in the loop
+            // will invalidate the IEnumerable
+            foreach (ActionItem actionItem in this.ActionItems.SelectedItems)
+            {
+                toBeDeleted.Add(actionItem);
+            }
 
-            //foreach (var note in toBeDeleted)
-            //{
-            //    await NoteAdapter.DeleteNoteAsync(note);
-            //}
+            foreach (var actionItem in toBeDeleted)
+            {
+                await this.manager.Delete(actionItem);
+            }
         }
 
         private void Multiselect_Click(object sender, RoutedEventArgs e)
@@ -75,8 +95,8 @@ namespace Sbs20.Actiontext.Views
 
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
-            //await NoteAdapter.TryReadAllFromStorageAsync();
-            //this.SelectMostAppropriateNote();
+            await this.manager.Reload();
+            this.SelectMostAppropriateActionItem();
         }
     }
 }

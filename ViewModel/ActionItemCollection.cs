@@ -78,9 +78,14 @@ namespace Sbs20.Actiontext.ViewModel
             }
         }
 
+        public ActionItem FindByValue(ActionItem actionItem)
+        {
+            return this.Where(a => a.Raw == actionItem.Raw).FirstOrDefault();
+        }
+
         public bool ContainsValue(ActionItem actionItem)
         {
-            return this.Where(a => a.Raw == actionItem.Raw).FirstOrDefault() != null;
+            return this.FindByValue(actionItem) != null;
         }
     }
 }
