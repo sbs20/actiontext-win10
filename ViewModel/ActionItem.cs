@@ -128,5 +128,10 @@ namespace Sbs20.Actiontext.ViewModel
         {
             get { return this.IsComplete ? "Visible" : "Collapsed"; }
         }
+
+        public string Raw
+        {
+            get { return this.todoTask.Raw; }
+        }
     }
 }

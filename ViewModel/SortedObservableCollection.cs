@@ -34,6 +34,11 @@ namespace Sbs20.Actiontext.ViewModel
             }
         }
 
+        public new void Insert(int index, T item)
+        {
+            throw new InvalidOperationException("Cannot insert into sorted collection. Use Add()");
+        }
+
         public void Sort()
         {
             ApplySort(Items.OrderBy(this.SortKey));

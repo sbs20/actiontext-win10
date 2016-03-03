@@ -17,7 +17,7 @@ namespace Sbs20.Actiontext.Views
             this.InitializeComponent();
 
             ActionItemManager m = new ActionItemManager();
-            m.Load();
+            m.Reload();
 
             //this.data.Source = TaskCollection.Instance.ViewSource;
             this.ActionItems.ItemsSource = ActionItemCollection.Instance;

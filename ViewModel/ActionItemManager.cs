@@ -16,19 +16,19 @@ namespace Sbs20.Actiontext.ViewModel
             this.Actions = ActionItemCollection.Instance;
         }
 
-        public async void Load()
+        public async void Reload()
         {
             var file = await FileStorageProvider.LoadFileAsync();
             var lines = await FileIO.ReadLinesAsync(file);
             foreach (string line in lines)
             {
-                this.Actions.Add(ActionItem.Parse(line));
+                ActionItem actionItem = ActionItem.Parse(line);
+
+                if (!this.Actions.ContainsValue(actionItem))
+                {
+                    this.Actions.Add(actionItem);
+                }
             }
         }
-
-        //private void Merge(ToDoLib.TaskList tasklist, IEnumerable<TodoTask> tasks)
-        //{
-
-        //}
     }
 }
