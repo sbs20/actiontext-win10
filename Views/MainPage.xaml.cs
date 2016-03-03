@@ -3,30 +3,26 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Sbs20.Actiontext.ViewModel;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace Sbs20.Actiontext.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
+        ActionItemManager manager;
+
         public MainPage()
         {
             this.InitializeComponent();
-
-            ActionItemManager m = new ActionItemManager();
-            m.Reload();
+            this.manager = new ActionItemManager();
 
             //this.data.Source = TaskCollection.Instance.ViewSource;
             this.ActionItems.ItemsSource = ActionItemCollection.Instance;
-            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            this.manager.Reload();
+
             VisualStateManager.GoToState(this, this.StandardState.Name, true);
         }
 
