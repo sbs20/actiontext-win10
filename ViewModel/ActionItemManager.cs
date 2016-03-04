@@ -5,37 +5,47 @@ using System.Threading.Tasks;
 
 namespace Sbs20.Actiontext.ViewModel
 {
-    public class ActionItemManager
+    public static class ActionItemManager
     {
-        public ActionItem Selected { get; set; }
-        public ActionItemCollection Actions { get; private set; }
+        public static ActionItem Selected { get; set; }
+        public static ActionItemCollection Actions { get; private set; }
 
-        public ActionItemManager()
+        static ActionItemManager()
         {
-            this.Actions = ActionItemCollection.Instance;
+            Actions = ActionItemCollection.Instance;
         }
 
-        public async Task Reload()
+        public static async Task ReloadAsync()
         {
             var file = await FileStorageProvider.LoadFileAsync();
             var lines = await FileIO.ReadLinesAsync(file);
             foreach (string line in lines)
             {
-                ActionItem actionItem = ActionItem.Parse(line);
+                ActionItem actionItem = new ActionItem(line);
 
-                if (!this.Actions.ContainsValue(actionItem))
+                if (!Actions.ContainsValue(actionItem))
                 {
-                    this.Actions.Add(actionItem);
+                    Actions.Add(actionItem);
                 }
             }
         }
 
-        public async Task Delete(ActionItem actionItem)
+        public static async Task SaveAsync()
         {
-            if (this.Actions.Contains(actionItem))
+            // TODO
+        }
+
+        public static void Delete(ActionItem actionItem)
+        {
+            if (Actions.Contains(actionItem))
             {
-                this.Actions.Remove(actionItem);
+                Actions.Remove(actionItem);
             }
+        }
+
+        public static ActionItem Create()
+        {
+            return new ActionItem(ActionItem.ToRawString(DateTime.Today, string.Empty));
         }
     }
 }

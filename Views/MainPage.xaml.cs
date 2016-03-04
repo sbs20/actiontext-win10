@@ -1,50 +1,53 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Sbs20.Actiontext.ViewModel;
-using System.Collections.Generic;
+using Sbs20.Actiontext.Extensions;
+using Windows.UI.Xaml.Input;
+using Windows.System;
 
 namespace Sbs20.Actiontext.Views
 {
     public sealed partial class MainPage : Page
     {
-        ActionItemManager manager;
-
         public MainPage()
         {
             this.InitializeComponent();
-            this.manager = new ActionItemManager();
 
             //this.data.Source = TaskCollection.Instance.ViewSource;
-            this.ActionItems.ItemsSource = ActionItemCollection.Instance;
+            this.ActionItems.ItemsSource = ActionItemManager.Actions;
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            await this.manager.Reload();
+            ActionItemManager.Actions.Sort();
             this.SelectMostAppropriateActionItem();
             VisualStateManager.GoToState(this, this.StandardState.Name, true);
         }
 
         private void SelectMostAppropriateActionItem()
         {
-            if (this.manager.Actions.Count > 0)
+            if (ActionItemManager.Actions.Count > 0)
             {
-                if (this.manager.Selected != null && !this.ActionItems.Items.Contains(this.manager.Selected))
+                if (ActionItemManager.Selected != null && !this.ActionItems.Items.Contains(ActionItemManager.Selected))
                 {
                     // If we're navigating back to this page then we reload all the notes from disk in which
                     // case we will have new references.
-                    this.manager.Selected = this.manager.Actions.FindByValue(this.manager.Selected);
+                    ActionItemManager.Selected = ActionItemManager.Actions.FindByValue(ActionItemManager.Selected);
                 }
 
-                if (this.manager.Selected == null)
+                if (ActionItemManager.Selected == null)
                 {
-                    this.manager.Selected = this.manager.Actions[0];
+                    ActionItemManager.Selected = ActionItemManager.Actions[0];
                 }
 
-                this.ActionItems.SelectedItem = this.manager.Selected;
+                this.ActionItems.SelectedItem = ActionItemManager.Selected;
             }
+
+            this.ActionItems.ScrollIntoView(ActionItemManager.Selected);
         }
 
         private void AdaptiveStates_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
@@ -55,11 +58,12 @@ namespace Sbs20.Actiontext.Views
         {
         }
 
-        private async void Add_Click(object sender, RoutedEventArgs e)
+        private void Add_Click(object sender, RoutedEventArgs e)
         {
-            //this.selectedNote = await NoteAdapter.CreateNoteAsync();
-            //this.MasterListView.SelectedItem = this.selectedNote;
-            //this.MasterListView.ScrollIntoView(this.selectedNote);
+            ActionItemManager.Selected = ActionItemManager.Create();
+            ActionItemManager.Actions.Add(ActionItemManager.Selected);
+            this.ActionItems.SelectedItem = ActionItemManager.Selected;
+            this.Edit();
         }
 
         private async void Delete_Click(object sender, RoutedEventArgs e)
@@ -75,8 +79,10 @@ namespace Sbs20.Actiontext.Views
 
             foreach (var actionItem in toBeDeleted)
             {
-                await this.manager.Delete(actionItem);
+                ActionItemManager.Delete(actionItem);
             }
+
+            await ActionItemManager.SaveAsync();
         }
 
         private void Multiselect_Click(object sender, RoutedEventArgs e)
@@ -95,8 +101,27 @@ namespace Sbs20.Actiontext.Views
 
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
-            await this.manager.Reload();
+            await ActionItemManager.ReloadAsync();
             this.SelectMostAppropriateActionItem();
+        }
+
+        private void Edit()
+        {
+            ActionItemManager.Selected = this.ActionItems.SelectedItem as ActionItem;
+            if (ActionItemManager.Selected != null)
+            {
+                Frame.Navigate(typeof(EditPage), ActionItemManager.Selected);
+            }
+        }
+
+        private void ActionItems_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case VirtualKey.F2:
+                    this.Edit();
+                    break;
+            }
         }
     }
 }

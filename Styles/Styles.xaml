@@ -137,7 +137,7 @@
     http://stackoverflow.com/questions/19953502/styling-textbox-passwordbox-in-xaml
     https://social.msdn.microsoft.com/Forums/azure/en-US/e1f0b754-0893-44d3-97a5-a71a078abd21/uwpxaml-textbox-background-color-and-focusable-issue?forum=wpdevelop
     -->
-    <Style x:Key="NoteTextStyle" TargetType="TextBox">
+    <Style x:Key="EditTextBoxStyle" TargetType="TextBox">
         <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}"/>
         <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextSelectionHighlightColorThemeBrush}"/>
         <Setter Property="Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>

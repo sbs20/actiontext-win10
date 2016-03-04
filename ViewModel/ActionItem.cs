@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Windows.UI.Xaml;
 using TodoTask = ToDoLib.Task;
 
 namespace Sbs20.Actiontext.ViewModel
@@ -30,17 +31,18 @@ namespace Sbs20.Actiontext.ViewModel
             return dt.ToString("yyyy-MM-dd");
         }
 
-        public ActionItem()
+        public static string ToRawString(DateTime creation, string body)
         {
-            this.todoTask = new TodoTask(null, null, null, null);
+            return ToString(creation) + " " + body;
         }
 
-        public static ActionItem Parse(string raw)
+        public ActionItem(string raw)
         {
-            return new ActionItem
-            {
-                todoTask = new TodoTask(raw)
-            };
+            this.todoTask = new TodoTask(raw);
+        }
+
+        public ActionItem() : this(string.Empty)
+        {
         }
 
         public string Body
@@ -55,11 +57,12 @@ namespace Sbs20.Actiontext.ViewModel
 
         public string Priority
         {
-            get { return this.todoTask.Priority; }
+            get { return this.todoTask.Priority.ToUpperInvariant(); }
             set
             {
-                this.todoTask.Priority = value;
+                this.todoTask.Priority = value.ToUpperInvariant();
                 this.OnPropertyChanged("Priority");
+                this.OnPropertyChanged("PriorityColour");
             }
         }
 
@@ -77,6 +80,11 @@ namespace Sbs20.Actiontext.ViewModel
         public DateTime CreationDate
         {
             get { return ToDateTime(this.todoTask.CreationDate); }
+            set
+            {
+                this.todoTask.CreationDate = ToString(value);
+                this.OnPropertyChanged("CreationDate");
+            }
         }
 
         public bool IsComplete
@@ -86,6 +94,7 @@ namespace Sbs20.Actiontext.ViewModel
             {
                 this.todoTask.Completed = value;
                 this.OnPropertyChanged("IsComplete");
+                this.OnPropertyChanged("BodyColour");
                 this.CompletionDate = DateTime.Now;
             }
         }
@@ -104,7 +113,8 @@ namespace Sbs20.Actiontext.ViewModel
         {
             get
             {
-                switch (this.Priority.ToLower())
+                string priority = this.Priority == null ? string.Empty : this.Priority.ToLower();
+                switch (priority)
                 {
                     case "(a)":
                         return "Red";
@@ -124,6 +134,15 @@ namespace Sbs20.Actiontext.ViewModel
             }
         }
 
+        public string BodyColour
+        {
+            get
+            {
+                var textColour = Application.Current.Resources["SystemBaseHighColor"];
+                return this.IsComplete ? "#808080" : textColour.ToString();
+            }
+        }
+
         public string StrikethroughLineVisibility
         {
             get { return this.IsComplete ? "Visible" : "Collapsed"; }
@@ -132,6 +151,18 @@ namespace Sbs20.Actiontext.ViewModel
         public string Raw
         {
             get { return this.todoTask.Raw; }
+            set
+            {
+                this.todoTask = new TodoTask(value);
+                this.OnPropertyChanged("CompletionDate");
+                this.OnPropertyChanged("DisplayDate");
+                this.OnPropertyChanged("Body");
+                this.OnPropertyChanged("BodyColour");
+                this.OnPropertyChanged("Priority");
+                this.OnPropertyChanged("PriorityColour");
+                this.OnPropertyChanged("CreationDate");
+                this.OnPropertyChanged("IsComplete");
+            }
         }
     }
 }

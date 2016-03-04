@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="Sbs20.Actiontext.Views.EditPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sbs20.Actiontext.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Sbs20.Actiontext.Controls"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:NoopConverter x:Key="NoopConverter" />
+    </Page.Resources>
+
+    <Grid 
+        
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <controls:PageHeader x:Name="PageHeader" Grid.Row="0">
+            <controls:PageHeader.HeaderContent>
+                <CommandBar VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                    <AppBarButton Name="BackButton" Icon="Back" Label="Back" Click="BackButton_Click" />
+                </CommandBar>
+            </controls:PageHeader.HeaderContent>
+        </controls:PageHeader>
+
+        <TextBox
+            Name="RawEdit"
+            TabIndex="0"
+            Grid.Row="1"
+            Grid.Column="0"
+            FontSize="20"
+            Style="{ThemeResource EditTextBoxStyle}"
+            KeyDown="BodyEdit_KeyDown"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            IsTextPredictionEnabled="False"
+            TextWrapping="Wrap"
+            Text="{x:Bind Path=ActionItem.Raw, Mode=TwoWay, Converter={StaticResource NoopConverter}}" />
+
+    </Grid>
+</Page>

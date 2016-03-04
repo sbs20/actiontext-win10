@@ -58,9 +58,10 @@
                     Name="Body"
                     Grid.Row="0"
                     Grid.Column="1"
+                    Foreground="{x:Bind BodyColour}"
                     TextWrapping="Wrap"
                     FontSize="20"
-                    Text="{x:Bind Body}"/>
+                    Text="{x:Bind Body, Mode=OneWay}"/>
 
                 <Line
                     Grid.Row="0"
@@ -147,7 +148,9 @@
         <ListView 
             Grid.Row="1"
             Name="ActionItems"
+            TabIndex="0"
             ItemClick="ActionItems_ItemClick"
+            KeyDown="ActionItems_KeyDown"
             ItemTemplate="{StaticResource dataTemplate}">
 
             <ListView.ItemContainerStyle>
