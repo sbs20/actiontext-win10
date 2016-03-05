@@ -24,18 +24,16 @@ namespace Sbs20.Actiontext.Views
         {
             base.OnNavigatedTo(e);
             ActionItemManager.Actions.Sort();
-            this.SelectMostAppropriateActionItem();
+            this.SelectActionItemAndScroll();
             VisualStateManager.GoToState(this, this.StandardState.Name, true);
         }
 
-        private void SelectMostAppropriateActionItem()
+        private void SelectActionItemAndScroll()
         {
             if (ActionItemManager.Actions.Count > 0)
             {
                 if (ActionItemManager.Selected != null && !this.ActionItems.Items.Contains(ActionItemManager.Selected))
                 {
-                    // If we're navigating back to this page then we reload all the notes from disk in which
-                    // case we will have new references.
                     ActionItemManager.Selected = ActionItemManager.Actions.FindByValue(ActionItemManager.Selected);
                 }
 
@@ -56,14 +54,20 @@ namespace Sbs20.Actiontext.Views
 
         private void ActionItems_ItemClick(object sender, ItemClickEventArgs e)
         {
+            ActionItemManager.Selected = e.ClickedItem as ActionItem;
+        }
+
+        private void ActionItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                ActionItemManager.Selected = e.AddedItems[0] as ActionItem;
+            }
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            ActionItemManager.Selected = ActionItemManager.Create();
-            ActionItemManager.Actions.Add(ActionItemManager.Selected);
-            this.ActionItems.SelectedItem = ActionItemManager.Selected;
-            this.Edit();
+            this.Create();
         }
 
         private async void Delete_Click(object sender, RoutedEventArgs e)
@@ -102,7 +106,15 @@ namespace Sbs20.Actiontext.Views
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
             await ActionItemManager.ReloadAsync();
-            this.SelectMostAppropriateActionItem();
+            this.SelectActionItemAndScroll();
+        }
+
+        private void Create()
+        {
+            ActionItemManager.Selected = ActionItemManager.Create();
+            ActionItemManager.Actions.Add(ActionItemManager.Selected);
+            this.ActionItems.SelectedItem = ActionItemManager.Selected;
+            this.Edit();
         }
 
         private void Edit()
@@ -119,9 +131,37 @@ namespace Sbs20.Actiontext.Views
             switch (e.Key)
             {
                 case VirtualKey.F2:
+                case VirtualKey.U:
                     this.Edit();
                     break;
+
+                case VirtualKey.N:
+                    this.Create();
+                    break;
+
+                case VirtualKey.X:
+                    this.SelectedToggleIsComplete();
+                    break;
             }
+        }
+
+        private void SelectedToggleIsComplete()
+        {
+            if (ActionItemManager.Selected != null)
+            {
+                ActionItemManager.Selected.IsComplete = !ActionItemManager.Selected.IsComplete;
+                ActionItemManager.Actions.Sort();
+                this.SelectActionItemAndScroll();
+            }
+        }
+
+        private void IsComplete_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkbox = e.OriginalSource as CheckBox;
+            ListViewItem container = checkbox.AllAncestry().First(el => el is ListViewItem) as ListViewItem;
+            ActionItemManager.Selected = this.ActionItems.ItemFromContainer(container) as ActionItem;
+            container.IsSelected = true;
+            this.SelectedToggleIsComplete();
         }
     }
 }

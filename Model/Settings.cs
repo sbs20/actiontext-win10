@@ -62,5 +62,10 @@ namespace Sbs20.Actiontext.Model
                 ApplicationData.Current.LocalSettings.Values["IsLightTheme"] = value == ApplicationTheme.Light;
             }
         }
+
+        public static bool PreservePriorityOnComplete
+        {
+            get { return true; }
+        }
     }
 }

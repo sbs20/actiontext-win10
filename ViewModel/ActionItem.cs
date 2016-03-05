@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sbs20.Actiontext.Model;
+using System;
 using System.ComponentModel;
 using Windows.UI.Xaml;
 using TodoTask = ToDoLib.Task;
@@ -92,10 +93,26 @@ namespace Sbs20.Actiontext.ViewModel
             get { return this.todoTask.Completed; }
             set
             {
-                this.todoTask.Completed = value;
-                this.OnPropertyChanged("IsComplete");
-                this.OnPropertyChanged("BodyColour");
-                this.CompletionDate = DateTime.Now;
+                if (this.todoTask.Completed != value)
+                {
+                    if (Settings.PreservePriorityOnComplete)
+                    {
+                        if (value && this.Priority.Length > 0)
+                        {
+                            this.Body = this.Priority + " " + this.Body;
+                        }
+                        else if (this.Body.StartsWith("("))
+                        {
+                            this.Priority = this.Body.Substring(0, 3);
+                            this.Body = this.Body.Substring(3).Trim();
+                        }
+                    }
+
+                    this.todoTask.Completed = value;
+                    this.OnPropertyChanged("IsComplete");
+                    this.OnPropertyChanged("BodyColour");
+                    this.CompletionDate = DateTime.Now;
+                }
             }
         }
 

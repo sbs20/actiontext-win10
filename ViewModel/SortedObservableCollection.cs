@@ -58,9 +58,14 @@ namespace Sbs20.Actiontext.ViewModel
         {
             var sortedItemsList = sortedItems.ToList();
 
-            foreach (var item in sortedItemsList)
+            for (int index = 0; index < sortedItemsList.Count; index++)
             {
-                Move(IndexOf(item), sortedItemsList.IndexOf(item));
+                var item = sortedItemsList[index];
+                int old = IndexOf(item);
+                if (old != index)
+                {
+                    this.Move(old, index);
+                }
             }
         }
     }

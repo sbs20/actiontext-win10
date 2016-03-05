@@ -16,10 +16,10 @@ namespace Sbs20.Actiontext.ViewModel
         private ActionItemCollection()
         {
             this.ViewSource = new ObservableCollection<GroupedActionItemCollection>();
-            this.SortKey = i =>
+            this.SortKey = actionItem =>
             {
-                TimeSpan span = DateTime.MaxValue - i.DisplayDate;
-                return (i.IsComplete ? "1" : "0") + ":" + i.Priority + ":" + span.Ticks + ":" + i.Body;
+                TimeSpan span = DateTime.MaxValue - actionItem.DisplayDate;
+                return (actionItem.IsComplete ? "1" : "0") + ":" + actionItem.Priority + ":" + span.Ticks + ":" + actionItem.Body;
             };
 
             this.CollectionChanged += TaskCollection_CollectionChanged;

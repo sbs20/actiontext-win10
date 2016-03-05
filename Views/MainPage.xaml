@@ -81,12 +81,14 @@
                     FontSize="12"
                     Text="{x:Bind DisplayDateString}" />
 
-                <Button
+                <CheckBox
+                    Name="IsComplete"
                     VerticalAlignment="Top"
                     Grid.Row="0"
-                    Grid.Column="2">
-                    <TextBlock>Done</TextBlock>
-                </Button>
+                    Grid.Column="2"
+                    Click="IsComplete_Click"
+                    IsChecked="{Binding IsComplete, Mode=OneWay}" />
+                
             </Grid>
 
         </DataTemplate>
@@ -150,6 +152,7 @@
             Name="ActionItems"
             TabIndex="0"
             ItemClick="ActionItems_ItemClick"
+            SelectionChanged="ActionItems_SelectionChanged"
             KeyDown="ActionItems_KeyDown"
             ItemTemplate="{StaticResource dataTemplate}">
 
