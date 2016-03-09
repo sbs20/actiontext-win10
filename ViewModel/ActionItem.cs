@@ -1,16 +1,28 @@
 ﻿using Sbs20.Actiontext.Model;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.UI.Xaml;
-using TodoTask = ToDoLib.Task;
 
 namespace Sbs20.Actiontext.ViewModel
 {
-    public class ActionItem : INotifyPropertyChanged
+    public class ActionItem : IActionItem, INotifyPropertyChanged
     {
-        private TodoTask todoTask;
-
+        private string raw;
+        private string body;
+        private string priority;
+        private DateTime completionDate;
+        private DateTime creationDate;
+        private bool isComplete;
+        
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public IList<string> Projects { get; private set; }
+        public string PrimaryProject { get; set; }
+        public IList<string> Contexts { get; private set; }
+        public string PrimaryContext { get; set; }
+        public DateTime DueDate { get; set; }
+        public int Index { get; set; }
 
         protected void OnPropertyChanged(string property)
         {
@@ -20,48 +32,46 @@ namespace Sbs20.Actiontext.ViewModel
             }
         }
 
-        private static DateTime ToDateTime(string s)
+        public ActionItem(string raw, int index)
         {
-            DateTime dt = DateTime.MinValue;
-            DateTime.TryParse(s, out dt);
-            return dt;
+            this.raw = string.Empty;
+            this.body = string.Empty;
+            this.priority = string.Empty;
+            this.completionDate = DateTime.MaxValue;
+            this.creationDate = DateTime.Today;
+            this.isComplete = false;
+            this.Index = index;
+
+            this.Contexts = new List<string>();
+            this.PrimaryContext = string.Empty;
+            this.Projects = new List<string>();
+            this.PrimaryProject = string.Empty;
+
+            this.DueDate = DateTime.MaxValue;
+
+            ActionItemAdapter.Parse(raw, this);
         }
 
-        private static string ToString(DateTime dt)
-        {
-            return dt.ToString("yyyy-MM-dd");
-        }
-
-        public static string ToRawString(DateTime creation, string body)
-        {
-            return ToString(creation) + " " + body;
-        }
-
-        public ActionItem(string raw)
-        {
-            this.todoTask = new TodoTask(raw);
-        }
-
-        public ActionItem() : this(string.Empty)
+        public ActionItem() : this(string.Empty, 0)
         {
         }
 
         public string Body
         {
-            get { return this.todoTask.Body; }
+            get { return this.body; }
             set
             {
-                this.todoTask.Body = value;
+                this.body = value;
                 this.OnPropertyChanged("Body");
             }
         }
 
         public string Priority
         {
-            get { return this.todoTask.Priority.ToUpperInvariant(); }
+            get { return this.priority ?? string.Empty; }
             set
             {
-                this.todoTask.Priority = value.ToUpperInvariant();
+                this.priority = value == null ? string.Empty : value.ToUpperInvariant();
                 this.OnPropertyChanged("Priority");
                 this.OnPropertyChanged("PriorityColour");
             }
@@ -69,10 +79,10 @@ namespace Sbs20.Actiontext.ViewModel
 
         public DateTime CompletionDate
         {
-            get { return ToDateTime(this.todoTask.CompletedDate); }
+            get { return this.completionDate; }
             set
             {
-                this.todoTask.CompletedDate = ToString(value);
+                this.completionDate = value;
                 this.OnPropertyChanged("CompletionDate");
                 this.OnPropertyChanged("DisplayDate");
             }
@@ -80,35 +90,37 @@ namespace Sbs20.Actiontext.ViewModel
 
         public DateTime CreationDate
         {
-            get { return ToDateTime(this.todoTask.CreationDate); }
+            get { return this.creationDate; }
             set
             {
-                this.todoTask.CreationDate = ToString(value);
+                this.creationDate = value;
                 this.OnPropertyChanged("CreationDate");
             }
         }
 
         public bool IsComplete
         {
-            get { return this.todoTask.Completed; }
+            get { return this.isComplete; }
             set
             {
-                if (this.todoTask.Completed != value)
+                if (this.isComplete != value)
                 {
                     if (Settings.PreservePriorityOnComplete)
                     {
                         if (value && this.Priority.Length > 0)
                         {
                             this.Body = this.Priority + " " + this.Body;
+                            this.Priority = null;
                         }
-                        else if (this.Body.StartsWith("("))
+                        // TODO
+                        else if (!value && this.Body.StartsWith("("))
                         {
                             this.Priority = this.Body.Substring(0, 3);
                             this.Body = this.Body.Substring(3).Trim();
                         }
                     }
 
-                    this.todoTask.Completed = value;
+                    this.isComplete = value;
                     this.OnPropertyChanged("IsComplete");
                     this.OnPropertyChanged("BodyColour");
                     this.CompletionDate = DateTime.Now;
@@ -123,26 +135,25 @@ namespace Sbs20.Actiontext.ViewModel
 
         public string DisplayDateString
         {
-            get { return ToString(this.DisplayDate); }
+            get { return this.DisplayDate.ToString("D"); }
         }
 
         public string PriorityColour
         {
             get
             {
-                string priority = this.Priority == null ? string.Empty : this.Priority.ToLower();
-                switch (priority)
+                switch (this.Priority)
                 {
-                    case "(a)":
+                    case "(A)":
                         return "Red";
 
-                    case "(b)":
+                    case "(B)":
                         return "Orange";
 
-                    case "(c)":
+                    case "(C)":
                         return "Green";
 
-                    case "(d)":
+                    case "(D)":
                         return "SkyBlue";
 
                     default:
@@ -167,19 +178,13 @@ namespace Sbs20.Actiontext.ViewModel
 
         public string Raw
         {
-            get { return this.todoTask.Raw; }
-            set
-            {
-                this.todoTask = new TodoTask(value);
-                this.OnPropertyChanged("CompletionDate");
-                this.OnPropertyChanged("DisplayDate");
-                this.OnPropertyChanged("Body");
-                this.OnPropertyChanged("BodyColour");
-                this.OnPropertyChanged("Priority");
-                this.OnPropertyChanged("PriorityColour");
-                this.OnPropertyChanged("CreationDate");
-                this.OnPropertyChanged("IsComplete");
-            }
+            get { return this.raw; }
+            set { this.raw = value; }
+        }
+
+        public void Reparse()
+        {
+            ActionItemAdapter.Parse(this.Raw, this);
         }
     }
 }

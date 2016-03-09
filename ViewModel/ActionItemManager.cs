@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Windows.Storage;
 using Sbs20.Actiontext.Model;
-using System.Threading.Tasks;
 
 namespace Sbs20.Actiontext.ViewModel
 {
@@ -19,20 +21,27 @@ namespace Sbs20.Actiontext.ViewModel
         {
             var file = await FileStorageProvider.LoadFileAsync();
             var lines = await FileIO.ReadLinesAsync(file);
-            foreach (string line in lines)
-            {
-                ActionItem actionItem = new ActionItem(line);
 
-                if (!Actions.ContainsValue(actionItem))
+            for (int index = 0; index < lines.Count; index++)
+            {
+                var line = lines[index];
+                if (line.Trim().Length > 0)
                 {
-                    Actions.Add(actionItem);
+                    ActionItem actionItem = new ActionItem(line, index);
+
+                    if (!Actions.ContainsValue(actionItem))
+                    {
+                        Actions.Add(actionItem);
+                    }
                 }
             }
         }
 
         public static async Task SaveAsync()
         {
-            // TODO
+            var file = await FileStorageProvider.LoadFileAsync();
+            var lines = Actions.OrderBy(i => i.Index).Select(i => ActionItemAdapter.ToString(i));
+            // await FileIO.WriteLinesAsync(file, lines);
         }
 
         public static void Delete(ActionItem actionItem)
@@ -45,7 +54,7 @@ namespace Sbs20.Actiontext.ViewModel
 
         public static ActionItem Create()
         {
-            return new ActionItem(ActionItem.ToRawString(DateTime.Today, string.Empty));
+            return new ActionItem(ActionItemAdapter.ToString(DateTime.Today, string.Empty), 0);
         }
     }
 }

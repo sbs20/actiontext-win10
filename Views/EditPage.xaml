@@ -45,7 +45,7 @@
             VerticalAlignment="Stretch"
             IsTextPredictionEnabled="False"
             TextWrapping="Wrap"
-            Text="{x:Bind Path=ActionItem.Raw, Mode=TwoWay, Converter={StaticResource NoopConverter}}" />
+            Text="{x:Bind Path=ActionItem.Raw, Mode=OneWay, Converter={StaticResource NoopConverter}}" />
 
     </Grid>
 </Page>
