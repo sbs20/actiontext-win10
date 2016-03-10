@@ -175,7 +175,11 @@ namespace Sbs20.Actiontext.Model
                 {
                     if (actionItem.IsComplete)
                     {
-                        str = Regex.Replace(actionItem.Raw, PriorityPattern, "");
+                        if (!Settings.PreservePriorityOnComplete)
+                        {
+                            str = Regex.Replace(actionItem.Raw, PriorityPattern, "");
+                        }
+
                         str = "x " + ToString(actionItem.CompletionDate) + " " + str;
                     }
                     else

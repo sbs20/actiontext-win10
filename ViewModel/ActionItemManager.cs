@@ -41,7 +41,7 @@ namespace Sbs20.Actiontext.ViewModel
         {
             var file = await FileStorageProvider.LoadFileAsync();
             var lines = Actions.OrderBy(i => i.Index).Select(i => ActionItemAdapter.ToString(i));
-            // await FileIO.WriteLinesAsync(file, lines);
+            await FileIO.WriteLinesAsync(file, lines);
         }
 
         public static void Delete(ActionItem actionItem)

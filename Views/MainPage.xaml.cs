@@ -145,19 +145,24 @@ namespace Sbs20.Actiontext.Views
             }
         }
 
-        private void SelectedIsComplete_Toggle()
+        private async void SelectedIsComplete_Toggle()
         {
             // Only do anything if something is selected otherwise badness will happen
             if (ActionItemManager.Selected != null)
             {
                 // We do need to worry about setting data here since this is non-standard 
                 ActionItemManager.Selected.IsComplete = !ActionItemManager.Selected.IsComplete;
+
+                // And save
+                await ActionItemManager.SaveAsync();
+
+                // Now sort
                 ActionItemManager.Actions.Sort();
                 this.SelectActionItemAndScroll();
             }
         }
 
-        private void IsComplete_Click(object sender, RoutedEventArgs e)
+        private async void IsComplete_Click(object sender, RoutedEventArgs e)
         {
             // There is two way data binding going on - so what we don't need to do is worry
             // about storing the data. This is purely about refreshing the view on the basis
@@ -177,6 +182,9 @@ namespace Sbs20.Actiontext.Views
             // Now sort and select
             ActionItemManager.Actions.Sort();
             this.SelectActionItemAndScroll();
+
+            // And save
+            await ActionItemManager.SaveAsync();
         }
     }
 }
