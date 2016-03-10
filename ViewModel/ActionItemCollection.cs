@@ -27,31 +27,31 @@ namespace Sbs20.Actiontext.ViewModel
 
         private void TaskCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    foreach (ActionItem todo in e.NewItems)
-                    {
-                        var item = this.ViewSource.Where(i => i.Key == todo.Priority).FirstOrDefault();
-                        if (item == null)
-                        {
-                            item = new GroupedActionItemCollection();
-                            item.Key = todo.Priority;
-                            this.ViewSource.Add(item);
-                        }
+            //switch (e.Action)
+            //{
+            //    case NotifyCollectionChangedAction.Add:
+            //        foreach (ActionItem todo in e.NewItems)
+            //        {
+            //            var item = this.ViewSource.Where(i => i.Key == todo.Priority).FirstOrDefault();
+            //            if (item == null)
+            //            {
+            //                item = new GroupedActionItemCollection();
+            //                item.Key = todo.Priority;
+            //                this.ViewSource.Add(item);
+            //            }
 
-                        item.Add(todo);
-                    }
+            //            item.Add(todo);
+            //        }
 
-                    break;
+            //        break;
 
-                case NotifyCollectionChangedAction.Remove:
-                case NotifyCollectionChangedAction.Replace:
-                    break;
+            //    case NotifyCollectionChangedAction.Remove:
+            //    case NotifyCollectionChangedAction.Replace:
+            //        break;
 
-                case NotifyCollectionChangedAction.Reset:
-                    break;
-            }
+            //    case NotifyCollectionChangedAction.Reset:
+            //        break;
+            //}
 
             //var query = this.GroupBy(t => t.Priority);
 

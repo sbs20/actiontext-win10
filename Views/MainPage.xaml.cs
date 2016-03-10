@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Sbs20.Actiontext.ViewModel;
-using Sbs20.Actiontext.Extensions;
 using Windows.UI.Xaml.Input;
-using Windows.System;
+using Windows.UI.Xaml.Navigation;
+using Sbs20.Actiontext.Extensions;
+using Sbs20.Actiontext.ViewModel;
 
 namespace Sbs20.Actiontext.Views
 {
@@ -140,15 +140,17 @@ namespace Sbs20.Actiontext.Views
                     break;
 
                 case VirtualKey.X:
-                    this.SelectedToggleIsComplete();
+                    this.SelectedIsComplete_Toggle();
                     break;
             }
         }
 
-        private void SelectedToggleIsComplete()
+        private void SelectedIsComplete_Toggle()
         {
+            // Only do anything if something is selected otherwise badness will happen
             if (ActionItemManager.Selected != null)
             {
+                // We do need to worry about setting data here since this is non-standard 
                 ActionItemManager.Selected.IsComplete = !ActionItemManager.Selected.IsComplete;
                 ActionItemManager.Actions.Sort();
                 this.SelectActionItemAndScroll();
@@ -157,11 +159,24 @@ namespace Sbs20.Actiontext.Views
 
         private void IsComplete_Click(object sender, RoutedEventArgs e)
         {
+            // There is two way data binding going on - so what we don't need to do is worry
+            // about storing the data. This is purely about refreshing the view on the basis
+            // of changes
+
+            // The thing being clicked isn't necessarily selected. So we need to fix that
             CheckBox checkbox = e.OriginalSource as CheckBox;
             ListViewItem container = checkbox.AllAncestry().First(el => el is ListViewItem) as ListViewItem;
-            ActionItemManager.Selected = this.ActionItems.ItemFromContainer(container) as ActionItem;
+
+            // It is really important we mark the container as selected. If we don't then we 
+            // get crashes on sort. 
             container.IsSelected = true;
-            this.SelectedToggleIsComplete();
+
+            // Similarly we need to make a note of the selected action
+            ActionItemManager.Selected = this.ActionItems.ItemFromContainer(container) as ActionItem;
+
+            // Now sort and select
+            ActionItemManager.Actions.Sort();
+            this.SelectActionItemAndScroll();
         }
     }
 }

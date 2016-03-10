@@ -52,7 +52,7 @@
                     Foreground="{x:Bind PriorityColour}"
                     FontWeight="Bold"
                     FontSize="20"
-                    Text="{x:Bind Priority}"/>
+                    Text="{x:Bind Priority, Mode=OneWay}"/>
                 
                 <TextBlock
                     Name="Body"
@@ -87,7 +87,7 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     Click="IsComplete_Click"
-                    IsChecked="{Binding IsComplete, Mode=OneWay}" />
+                    IsChecked="{Binding IsComplete, Mode=TwoWay}" />
                 
             </Grid>
 
