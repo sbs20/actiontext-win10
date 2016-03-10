@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Windows.Storage;
 using Sbs20.Actiontext.Model;
 
