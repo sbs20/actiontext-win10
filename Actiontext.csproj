@@ -126,13 +126,7 @@
     <Compile Include="Model\Settings.cs" />
     <Compile Include="ViewModel\ActionItemCollection.cs" />
     <Compile Include="ViewModel\ActionItemManager.cs" />
-    <Compile Include="ToDoLib\Log.cs" />
-    <Compile Include="ToDoLib\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToDoLib\IEnumerableExtensions.cs" />
-    <Compile Include="ToDoLib\StringExtensions.cs" />
-    <Compile Include="ToDoLib\TaskException.cs" />
-    <Compile Include="ToDoLib\TaskList.cs" />
     <Compile Include="Views\NoopConverter.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
