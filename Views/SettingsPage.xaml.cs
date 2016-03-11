@@ -43,8 +43,9 @@ namespace Sbs20.Actiontext.Views
         {
             ApplicationTheme selectedTheme = this.DarkThemeToggle.IsOn ? ApplicationTheme.Dark : ApplicationTheme.Light;
             Settings.ApplicationTheme = selectedTheme;
-            var appShell = Window.Current.Content as AppShell;
-            appShell.RequestedTheme = selectedTheme == ApplicationTheme.Dark ? ElementTheme.Dark : ElementTheme.Light;
+
+            //var appShell = Window.Current.Content as AppShell;
+            //appShell.RequestedTheme = selectedTheme == ApplicationTheme.Dark ? ElementTheme.Dark : ElementTheme.Light;
         }
     }
 }

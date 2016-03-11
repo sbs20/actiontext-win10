@@ -105,6 +105,7 @@ namespace Sbs20.Actiontext.Views
 
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
+            ActionItemManager.Actions.Clear();
             await ActionItemManager.ReloadAsync();
             this.SelectActionItemAndScroll();
         }
