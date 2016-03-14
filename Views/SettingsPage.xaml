@@ -39,6 +39,15 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Toggled="DarkThemeToggle_Toggled"/>
+
+                <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Margin="0, 10">Behaviour</TextBlock>
+
+                <ToggleSwitch
+                    x:Name="DeleteKeyToggle" 
+                    Header="Respond to delete key" 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Toggled="DeleteKeyToggle_Toggled"/>
             </StackPanel>
         </ScrollViewer>
 

@@ -171,6 +171,7 @@
             Grid.Row="1"
             Name="ActionItems"
             TabIndex="0"
+            DoubleTapped="ActionItems_DoubleTapped"
             ItemClick="ActionItems_ItemClick"
             SelectionChanged="ActionItems_SelectionChanged"
             KeyDown="ActionItems_KeyDown"

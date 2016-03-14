@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Sbs20.Actiontext.Model;
+using Sbs20.Actiontext.ViewModel;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,11 +25,13 @@ namespace Sbs20.Actiontext.Views
         {
             this.InitializeComponent();
             this.DarkThemeToggle.IsOn = Settings.ApplicationTheme == ApplicationTheme.Dark;
+            this.DeleteKeyToggle.IsOn = Settings.IsDeleteKeyActive;
         }
 
         private async void ChangeStorageLocation_Click(object sender, RoutedEventArgs e)
         {
             await Settings.SelectLocalFileAsync();
+            await ActionItemManager.ReloadAsync();
         }
 
         private void ApplyTheme_Click(object sender, RoutedEventArgs e)
@@ -48,6 +51,12 @@ namespace Sbs20.Actiontext.Views
         private void ClearStorageLocation_Click(object sender, RoutedEventArgs e)
         {
             Settings.ClearLocalFileReference();
+            ActionItemManager.Actions.Clear();
+        }
+
+        private void DeleteKeyToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            Settings.IsDeleteKeyActive = this.DeleteKeyToggle.IsOn;
         }
     }
 }

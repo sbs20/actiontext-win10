@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Navigation;
 using Sbs20.Actiontext.Extensions;
 using Sbs20.Actiontext.ViewModel;
 using Sbs20.Actiontext.Model;
+using System.Threading.Tasks;
 
 namespace Sbs20.Actiontext.Views
 {
@@ -28,7 +29,7 @@ namespace Sbs20.Actiontext.Views
             if (hasFile)
             {
                 this.Message.Visibility = Visibility.Collapsed;
-                await ActionItemManager.ReloadAsync();
+                ActionItemManager.Actions.Sort();
                 this.SelectActionItemAndScroll();
                 VisualStateManager.GoToState(this, this.StandardState.Name, true);
             }
@@ -83,21 +84,7 @@ namespace Sbs20.Actiontext.Views
 
         private async void Delete_Click(object sender, RoutedEventArgs e)
         {
-            IList<ActionItem> toBeDeleted = new List<ActionItem>();
-
-            // We have to make a temporary list of things to delete as doing so in the loop
-            // will invalidate the IEnumerable
-            foreach (ActionItem actionItem in this.ActionItems.SelectedItems)
-            {
-                toBeDeleted.Add(actionItem);
-            }
-
-            foreach (var actionItem in toBeDeleted)
-            {
-                ActionItemManager.Delete(actionItem);
-            }
-
-            await ActionItemManager.SaveAsync();
+            await this.DeleteAsync();
         }
 
         private void Multiselect_Click(object sender, RoutedEventArgs e)
@@ -137,7 +124,26 @@ namespace Sbs20.Actiontext.Views
             }
         }
 
-        private void ActionItems_KeyDown(object sender, KeyRoutedEventArgs e)
+        private async Task DeleteAsync()
+        {
+            IList<ActionItem> toBeDeleted = new List<ActionItem>();
+
+            // We have to make a temporary list of things to delete as doing so in the loop
+            // will invalidate the IEnumerable
+            foreach (ActionItem actionItem in this.ActionItems.SelectedItems)
+            {
+                toBeDeleted.Add(actionItem);
+            }
+
+            foreach (var actionItem in toBeDeleted)
+            {
+                ActionItemManager.Delete(actionItem);
+            }
+
+            await ActionItemManager.SaveAsync();
+        }
+
+        private async void ActionItems_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             switch (e.Key)
             {
@@ -152,6 +158,13 @@ namespace Sbs20.Actiontext.Views
 
                 case VirtualKey.X:
                     this.SelectedIsComplete_Toggle();
+                    break;
+
+                case VirtualKey.Delete:
+                    if (Settings.IsDeleteKeyActive)
+                    {
+                        await this.DeleteAsync();
+                    }
                     break;
             }
         }
@@ -196,6 +209,11 @@ namespace Sbs20.Actiontext.Views
 
             // And save
             await ActionItemManager.SaveAsync();
+        }
+
+        private void ActionItems_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+
         }
     }
 }

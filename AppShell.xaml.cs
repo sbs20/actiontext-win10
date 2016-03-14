@@ -56,10 +56,11 @@ namespace Sbs20.Actiontext
         {
             this.InitializeComponent();
 
-            this.Loaded += (sender, args) =>
+            this.Loaded += async (sender, args) =>
             {
                 Current = this;
                 this.TogglePaneButton.Focus(FocusState.Programmatic);
+                await ActionItemManager.ReloadAsync();
             };
 
             this.RootSplitView.RegisterPropertyChangedCallback(
