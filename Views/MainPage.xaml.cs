@@ -213,7 +213,7 @@ namespace Sbs20.Actiontext.Views
 
         private void ActionItems_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-
+            this.Edit();
         }
     }
 }
