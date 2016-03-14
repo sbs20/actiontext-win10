@@ -18,9 +18,6 @@ using Sbs20.Actiontext.Model;
 
 namespace Sbs20.Actiontext.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class SettingsPage : Page
     {
         public SettingsPage()
@@ -46,6 +43,11 @@ namespace Sbs20.Actiontext.Views
 
             //var appShell = Window.Current.Content as AppShell;
             //appShell.RequestedTheme = selectedTheme == ApplicationTheme.Dark ? ElementTheme.Dark : ElementTheme.Light;
+        }
+
+        private void ClearStorageLocation_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.ClearLocalFileReference();
         }
     }
 }

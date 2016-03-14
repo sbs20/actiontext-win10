@@ -8,12 +8,12 @@ namespace Sbs20.Actiontext.Model
     {
         public static async Task<StorageFile> LoadFileAsync()
         {
-            return await Settings.GetStorageFileAsync();
+            return await Settings.GetLocalFileAsync();
         }
 
         public static async Task SaveFileAsync(string name, string data)
         {
-            var file = await Settings.GetStorageFileAsync();
+            var file = await Settings.GetLocalFileAsync();
 
             try
             {

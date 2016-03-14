@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Sbs20.Actiontext.Extensions;
 using Sbs20.Actiontext.ViewModel;
+using Sbs20.Actiontext.Model;
 
 namespace Sbs20.Actiontext.Views
 {
@@ -15,17 +16,27 @@ namespace Sbs20.Actiontext.Views
         public MainPage()
         {
             this.InitializeComponent();
-
-            //this.data.Source = TaskCollection.Instance.ViewSource;
             this.ActionItems.ItemsSource = ActionItemManager.Actions;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ActionItemManager.Actions.Sort();
-            this.SelectActionItemAndScroll();
-            VisualStateManager.GoToState(this, this.StandardState.Name, true);
+
+            bool hasFile = await Settings.GetLocalFileAsync() != null;
+
+            if (hasFile)
+            {
+                this.Message.Visibility = Visibility.Collapsed;
+                await ActionItemManager.ReloadAsync();
+                this.SelectActionItemAndScroll();
+                VisualStateManager.GoToState(this, this.StandardState.Name, true);
+            }
+            else
+            {
+                this.Message.Visibility = Visibility.Visible;
+                VisualStateManager.GoToState(this, this.NoFileState.Name, true);
+            }
         }
 
         private void SelectActionItemAndScroll()
@@ -105,7 +116,6 @@ namespace Sbs20.Actiontext.Views
 
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
-            ActionItemManager.Actions.Clear();
             await ActionItemManager.ReloadAsync();
             this.SelectActionItemAndScroll();
         }

@@ -18,19 +18,24 @@ namespace Sbs20.Actiontext.ViewModel
 
         public static async Task ReloadAsync()
         {
+            ActionItemManager.Actions.Clear();
             var file = await FileStorageProvider.LoadFileAsync();
-            var lines = await FileIO.ReadLinesAsync(file);
 
-            for (int index = 0; index < lines.Count; index++)
+            if (file != null)
             {
-                var line = lines[index];
-                if (line.Trim().Length > 0)
-                {
-                    ActionItem actionItem = new ActionItem(line, index);
+                var lines = await FileIO.ReadLinesAsync(file);
 
-                    if (!Actions.ContainsValue(actionItem))
+                for (int index = 0; index < lines.Count; index++)
+                {
+                    var line = lines[index];
+                    if (line.Trim().Length > 0)
                     {
-                        Actions.Add(actionItem);
+                        ActionItem actionItem = new ActionItem(line, index);
+
+                        if (!Actions.ContainsValue(actionItem))
+                        {
+                            Actions.Add(actionItem);
+                        }
                     }
                 }
             }

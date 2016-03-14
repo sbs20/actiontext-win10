@@ -133,6 +133,19 @@
                         <!--#endregion-->
                     </VisualState.Setters>
                 </VisualState>
+                <VisualState x:Name="NoFileState">
+                    <VisualState.Setters>
+                        <Setter Target="ActionItems.SelectionMode" Value="Single" />
+                        <Setter Target="ActionItems.IsItemClickEnabled" Value="False" />
+                        <!--#region App Bar Commands-->
+                        <Setter Target="Multiselect.Visibility" Value="Collapsed" />
+                        <Setter Target="Add.Visibility" Value="Collapsed" />
+                        <Setter Target="Refresh.Visibility" Value="Collapsed" />
+                        <Setter Target="Delete.Visibility" Value="Collapsed" />
+                        <Setter Target="CancelMultiselect.Visibility" Value="Collapsed" />
+                        <!--#endregion-->
+                    </VisualState.Setters>
+                </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
@@ -147,6 +160,13 @@
             </controls:PageHeader.HeaderContent>
         </controls:PageHeader>
 
+        <TextBlock
+            Grid.Row="1"
+            Margin="10,10,10,10"
+            Name="Message">
+            You need to select a todo.txt file in settings.
+        </TextBlock>
+        
         <ListView 
             Grid.Row="1"
             Name="ActionItems"

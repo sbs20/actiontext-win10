@@ -11,6 +11,14 @@ namespace Sbs20.Actiontext.Model
     {
         private const string LocalStorageFile = "LocalStorageFile";
 
+        public static void ClearLocalFileReference()
+        {
+            if (StorageApplicationPermissions.FutureAccessList.ContainsItem(LocalStorageFile))
+            {
+                StorageApplicationPermissions.FutureAccessList.Remove(LocalStorageFile);
+            }
+        }
+
         public static async Task SelectLocalFileAsync()
         {
             var filePicker = new FileOpenPicker()
@@ -20,7 +28,7 @@ namespace Sbs20.Actiontext.Model
 
             filePicker.FileTypeFilter.Add("*");
 
-            while (true)
+            if (true)
             {
                 var file = await filePicker.PickSingleFileAsync();
 
@@ -28,22 +36,17 @@ namespace Sbs20.Actiontext.Model
                 {
                     StorageApplicationPermissions.FutureAccessList.AddOrReplace(LocalStorageFile, file);
                 }
-
-                if (StorageApplicationPermissions.FutureAccessList.ContainsItem(LocalStorageFile))
-                {
-                    break;
-                }
             }
         }
 
-        public static async Task<StorageFile> GetStorageFileAsync()
+        public static async Task<StorageFile> GetLocalFileAsync()
         {
-            if (!StorageApplicationPermissions.FutureAccessList.ContainsItem(LocalStorageFile))
+            if (StorageApplicationPermissions.FutureAccessList.ContainsItem(LocalStorageFile))
             {
-                await SelectLocalFileAsync();
+                return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(LocalStorageFile);
             }
 
-            return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(LocalStorageFile);
+            return null;
         }
 
         public static ApplicationTheme ApplicationTheme
