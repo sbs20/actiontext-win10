@@ -61,7 +61,7 @@
                     Foreground="{x:Bind BodyColour}"
                     TextWrapping="Wrap"
                     FontSize="20"
-                    Text="{x:Bind Body, Mode=OneWay}"/>
+                    Text="{x:Bind Content, Mode=OneWay}"/>
 
                 <Line
                     Grid.Row="0"

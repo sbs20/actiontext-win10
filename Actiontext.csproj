@@ -105,6 +105,7 @@
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\ICollectionExtension.cs" />
     <Compile Include="Extensions\XamlDependencyObjectExtension.cs" />
     <Compile Include="Model\ActionItemAdapter.cs" />
     <Compile Include="Model\IActionItem.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Sbs20.Actiontext.Extensions;
 
 namespace Sbs20.Actiontext.Model
 {
@@ -135,7 +136,7 @@ namespace Sbs20.Actiontext.Model
                 }
                 i++;
             }
-            action.Projects.Concat(ProjectSet);
+            action.Projects.Add(ProjectSet);
             raw = reg.Replace(raw, "");
 
             var ContextsSet = new SortedSet<string>();
@@ -153,7 +154,7 @@ namespace Sbs20.Actiontext.Model
                 }
                 i++;
             }
-            action.Contexts.Concat(ContextsSet);
+            action.Contexts.Add(ContextsSet);
             raw = reg.Replace(raw, string.Empty);
 
             action.Body = raw.Trim();

@@ -63,6 +63,17 @@ namespace Sbs20.Actiontext.ViewModel
             {
                 this.body = value;
                 this.OnPropertyChanged("Body");
+                this.OnPropertyChanged("Content");
+            }
+        }
+
+        public string Content
+        {
+            get
+            {
+                return this.Body + " " +
+                    string.Join(" ", this.Projects) +
+                    string.Join(" ", this.Contexts);
             }
         }
 
