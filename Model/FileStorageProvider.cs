@@ -6,7 +6,7 @@ namespace Sbs20.Actiontext.Model
 {
     public class FileStorageProvider
     {
-        public static async Task<StorageFile> LoadFileAsync()
+        public static async Task<StorageFile> GetFileAsync()
         {
             return await Settings.GetLocalFileAsync();
         }

@@ -19,7 +19,7 @@ namespace Sbs20.Actiontext.ViewModel
         public static async Task ReloadAsync()
         {
             ActionItemManager.Actions.Clear();
-            var file = await FileStorageProvider.LoadFileAsync();
+            var file = await FileStorageProvider.GetFileAsync();
 
             if (file != null)
             {
@@ -43,7 +43,7 @@ namespace Sbs20.Actiontext.ViewModel
 
         public static async Task SaveAsync()
         {
-            var file = await FileStorageProvider.LoadFileAsync();
+            var file = await FileStorageProvider.GetFileAsync();
             var lines = Actions.OrderBy(i => i.Index).Select(i => ActionItemAdapter.ToString(i));
             await FileIO.WriteLinesAsync(file, lines);
         }

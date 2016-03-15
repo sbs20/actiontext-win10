@@ -38,6 +38,7 @@ namespace Sbs20.Actiontext.Views
             base.OnNavigatedTo(e);
 
             this.ActionItem = e.Parameter as ActionItem;
+            this.ActionItem.Restring();
             this.initialRaw = this.ActionItem.Raw;
 
             // Register for hardware and software back request from the system

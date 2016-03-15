@@ -119,6 +119,13 @@ namespace Sbs20.Actiontext.ViewModel
                             this.Body = this.Body.Substring(3).Trim();
                         }
                     }
+                    else
+                    {
+                        if (value)
+                        {
+                            this.Priority = null;
+                        }
+                    }
 
                     this.isComplete = value;
                     this.OnPropertyChanged("IsComplete");
@@ -185,6 +192,11 @@ namespace Sbs20.Actiontext.ViewModel
         public void Reparse()
         {
             ActionItemAdapter.Parse(this.Raw, this);
+        }
+
+        public void Restring()
+        {
+            this.Raw = ActionItemAdapter.ToString(this);
         }
     }
 }

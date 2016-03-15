@@ -38,7 +38,7 @@
                     Header="Dark theme" 
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Toggled="DarkThemeToggle_Toggled"/>
+                    Toggled="Toggle_Toggled"/>
 
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Margin="0, 10">Behaviour</TextBlock>
 
@@ -47,7 +47,15 @@
                     Header="Respond to delete key" 
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Toggled="DeleteKeyToggle_Toggled"/>
+                    Toggled="Toggle_Toggled"/>
+
+                <ToggleSwitch
+                    x:Name="PreservePriorityOnCompleteToggle" 
+                    Header="Preserve priority on completion" 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Toggled="Toggle_Toggled"/>
+
             </StackPanel>
         </ScrollViewer>
 
