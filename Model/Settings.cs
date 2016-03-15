@@ -46,7 +46,11 @@ namespace Sbs20.Actiontext.Model
         {
             if (StorageApplicationPermissions.FutureAccessList.ContainsItem(SettingLocalStorageFile))
             {
-                return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(SettingLocalStorageFile);
+                try
+                {
+                    return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(SettingLocalStorageFile);
+                }
+                catch { }
             }
 
             return null;
