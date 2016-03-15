@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Sbs20.Actiontext.Model;
 using Sbs20.Actiontext.ViewModel;
+using Windows.UI.Popups;
 
 namespace Sbs20.Actiontext.Views
 {
@@ -14,6 +15,7 @@ namespace Sbs20.Actiontext.Views
             this.DarkThemeToggle.IsOn = Settings.ApplicationTheme == ApplicationTheme.Dark;
             this.DeleteKeyToggle.IsOn = Settings.IsDeleteKeyActive;
             this.PreservePriorityOnCompleteToggle.IsOn = Settings.PreservePriorityOnComplete;
+            this.ThemeInfoVisibilty();
         }
 
         private async void ChangeStorageLocation_Click(object sender, RoutedEventArgs e)
@@ -33,6 +35,13 @@ namespace Sbs20.Actiontext.Views
             ActionItemManager.Actions.Clear();
         }
 
+        private void ThemeInfoVisibilty()
+        {
+            this.ThemeInfo.Visibility = App.Current.RequestedTheme == Settings.ApplicationTheme ?
+                Visibility.Collapsed :
+                Visibility.Visible;
+        }
+
         private void Toggle_Toggled(object sender, RoutedEventArgs e)
         {
             var toggle = sender as ToggleSwitch;
@@ -49,6 +58,7 @@ namespace Sbs20.Actiontext.Views
 
                 case "DarkThemeToggle":
                     Settings.ApplicationTheme = toggle.IsOn ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                    this.ThemeInfoVisibilty();
                     break;
 
                 default:

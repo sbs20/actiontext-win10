@@ -40,6 +40,8 @@
                     VerticalAlignment="Stretch"
                     Toggled="Toggle_Toggled"/>
 
+                <TextBlock Name="ThemeInfo" Style="{ThemeResource BodyTextBlockStyle}" Margin="0, 10">Your theme changes will take effect on restart</TextBlock>
+
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Margin="0, 10">Behaviour</TextBlock>
 
                 <ToggleSwitch
