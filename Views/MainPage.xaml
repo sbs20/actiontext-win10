@@ -156,7 +156,23 @@
 
         <controls:PageHeader Grid.Row="0">
             <controls:PageHeader.HeaderContent>
-                <TextBlock Text="Actions" Style="{ThemeResource PageTitleTextBlockStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock 
+                        Grid.Column="0"
+                        Text="Actions" 
+                        Style="{ThemeResource PageTitleTextBlockStyle}"/>
+
+                    <TextBox
+                        Visibility="Collapsed"
+                        Grid.Column="1"
+                        PlaceholderText="Search"
+                        Name="Search" />
+                </Grid>
             </controls:PageHeader.HeaderContent>
         </controls:PageHeader>
 
