@@ -15,6 +15,7 @@ namespace Sbs20.Actiontext.Views
             this.DarkThemeToggle.IsOn = Settings.ApplicationTheme == ApplicationTheme.Dark;
             this.DeleteKeyToggle.IsOn = Settings.IsDeleteKeyActive;
             this.PreservePriorityOnCompleteToggle.IsOn = Settings.PreservePriorityOnComplete;
+            this.MaintainSelectionOnCompleteToggle.IsOn = Settings.MaintainSelectionOnComplete;
             this.ThemeInfoVisibilty();
         }
 
@@ -53,12 +54,16 @@ namespace Sbs20.Actiontext.Views
                     break;
 
                 case "DeleteKeyToggle":
-                    Settings.IsDeleteKeyActive = this.DeleteKeyToggle.IsOn;
+                    Settings.IsDeleteKeyActive = toggle.IsOn;
                     break;
 
                 case "DarkThemeToggle":
                     Settings.ApplicationTheme = toggle.IsOn ? ApplicationTheme.Dark : ApplicationTheme.Light;
                     this.ThemeInfoVisibilty();
+                    break;
+
+                case "MaintainSelectionOnCompleteToggle":
+                    Settings.MaintainSelectionOnComplete = toggle.IsOn;
                     break;
 
                 default:

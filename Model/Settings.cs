@@ -13,6 +13,7 @@ namespace Sbs20.Actiontext.Model
         private const string SettingIsLightTheme = "IsLightTheme";
         private const string SettingIsDeleteKeyActive = "IsDeleteKeyActive";
         private const string SettingPreservePriorityOnComplete = "PreservePriorityOnComplete";
+        private const string SettingMaintainSelectionOnComplete = "MaintainSelectionOnComplete";
 
         public static void ClearLocalFileReference()
         {
@@ -88,6 +89,12 @@ namespace Sbs20.Actiontext.Model
         {
             get { return Convert.ToBoolean(get(SettingPreservePriorityOnComplete, true)); }
             set { ApplicationData.Current.LocalSettings.Values[SettingPreservePriorityOnComplete] = value; }
+        }
+
+        public static bool MaintainSelectionOnComplete
+        {
+            get { return Convert.ToBoolean(get(SettingMaintainSelectionOnComplete, false)); }
+            set { ApplicationData.Current.LocalSettings.Values[SettingMaintainSelectionOnComplete] = value; }
         }
     }
 }

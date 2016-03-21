@@ -58,6 +58,13 @@
                     VerticalAlignment="Stretch"
                     Toggled="Toggle_Toggled"/>
 
+                <ToggleSwitch
+                    x:Name="MaintainSelectionOnCompleteToggle" 
+                    Header="Maintain selection on completion" 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Toggled="Toggle_Toggled"/>
+
             </StackPanel>
         </ScrollViewer>
 

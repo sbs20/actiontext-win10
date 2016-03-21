@@ -169,6 +169,20 @@ namespace Sbs20.Actiontext.Views
             }
         }
 
+        private void AlterSelectionIfRequired()
+        {
+            if (!Settings.MaintainSelectionOnComplete)
+            {
+                int index = ActionItemManager.Actions.IndexOf(ActionItemManager.Selected) + 1;
+                if (index >= ActionItemManager.Actions.Count)
+                {
+                    index = ActionItemManager.Actions.Count - 1;
+                }
+
+                ActionItemManager.Selected = ActionItemManager.Actions[index];
+            }
+        }
+
         private async void SelectedIsComplete_Toggle()
         {
             // Only do anything if something is selected otherwise badness will happen
@@ -176,6 +190,7 @@ namespace Sbs20.Actiontext.Views
             {
                 // We do need to worry about setting data here since this is non-standard 
                 ActionItemManager.Selected.IsComplete = !ActionItemManager.Selected.IsComplete;
+                this.AlterSelectionIfRequired();
 
                 // And save
                 await ActionItemManager.SaveAsync();
@@ -202,6 +217,7 @@ namespace Sbs20.Actiontext.Views
 
             // Similarly we need to make a note of the selected action
             ActionItemManager.Selected = this.ActionItems.ItemFromContainer(container) as ActionItem;
+            this.AlterSelectionIfRequired();
 
             // Now sort and select
             ActionItemManager.Actions.Sort();
