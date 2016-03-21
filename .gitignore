@@ -279,3 +279,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+# Store / Appx files
+*.appx
+BundleArtifacts/
+_pkginfo.txt
