@@ -1,6 +1,10 @@
 # actiontext-win10
 Basic [Todo.txt](http://todotxt.com/) implementation for Windows 10
 
+[Install from the Windows Store](https://www.microsoft.com/store/apps/9nblggh4r92g?ocid=badge)
+
+![Screenshot](https://github.com/sbs20/actiontext-win10/raw/master/img/screen.png)
+
 Uses modified parsing and serialising code by [Ben Hughes for todotxt.net](https://github.com/benrhughes/todotxt.net)
 
 ## License
