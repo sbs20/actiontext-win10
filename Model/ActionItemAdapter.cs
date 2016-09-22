@@ -136,6 +136,8 @@ namespace Sbs20.Actiontext.Model
                 }
                 i++;
             }
+
+            action.Projects.Clear();
             action.Projects.Add(ProjectSet);
             raw = reg.Replace(raw, "");
 
@@ -154,6 +156,8 @@ namespace Sbs20.Actiontext.Model
                 }
                 i++;
             }
+
+            action.Contexts.Clear();
             action.Contexts.Add(ContextsSet);
             raw = reg.Replace(raw, string.Empty);
 
