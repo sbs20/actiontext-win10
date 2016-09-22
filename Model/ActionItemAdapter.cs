@@ -121,7 +121,7 @@ namespace Sbs20.Actiontext.Model
             action.CreationDate = ToDateTime(reg.Match(raw).Groups["date"].Value.Trim());
             raw = reg.Replace(raw, string.Empty);
 
-            var ProjectSet = new SortedSet<string>();
+            var projectSet = new SortedSet<string>();
             reg = new Regex(ProjectPattern);
             var projects = reg.Matches(raw);
             action.PrimaryProject = null;
@@ -129,7 +129,7 @@ namespace Sbs20.Actiontext.Model
             foreach (Match project in projects)
             {
                 var p = project.Groups["proj"].Value.Trim();
-                ProjectSet.Add(p);
+                projectSet.Add(p);
                 if (i == 0)
                 {
                     action.PrimaryProject = p;
@@ -138,10 +138,10 @@ namespace Sbs20.Actiontext.Model
             }
 
             action.Projects.Clear();
-            action.Projects.Add(ProjectSet);
+            action.Projects.Add(projectSet);
             raw = reg.Replace(raw, "");
 
-            var ContextsSet = new SortedSet<string>();
+            var contextSet = new SortedSet<string>();
             reg = new Regex(ContextPattern);
             var contexts = reg.Matches(raw);
             action.PrimaryContext = null;
@@ -149,7 +149,7 @@ namespace Sbs20.Actiontext.Model
             foreach (Match context in contexts)
             {
                 var c = context.Groups["context"].Value.Trim();
-                ContextsSet.Add(c);
+                contextSet.Add(c);
                 if (i == 0)
                 {
                     action.PrimaryContext = c;
@@ -158,7 +158,7 @@ namespace Sbs20.Actiontext.Model
             }
 
             action.Contexts.Clear();
-            action.Contexts.Add(ContextsSet);
+            action.Contexts.Add(contextSet);
             raw = reg.Replace(raw, string.Empty);
 
             action.Body = raw.Trim();
